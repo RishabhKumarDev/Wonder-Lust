@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add new Listing</title>
+</head>
+
+<body>
+  <h3>Add new Listing</h3>
+  <form action="/listings" method="post">
+    <label for="title">
+      title : <input type="text" name="listing[title]" placeholder="Enter your title">
+    </label> <br>
+    <label for="description">
+      description : <textarea type="text" name="listing[description]" placeholder="Enter your description"> </textarea>
+    </label> <br>
+    <label for="filename">
+      filename : <input type="text" name="listing[image][filename]" placeholder="Enter your filename">
+    </label> <br>
+    <label for="url">
+      url : <input type="text" name="listing[image][url]" placeholder="Enter your url">
+    </label> <br>
+    <label for="price">
+      price : <input type="number" name="listing[price]" placeholder="Enter your price">
+    </label> <br>
+    <label for="location">
+      location : <input type="text" name="listing[location]" placeholder="Enter your location">
+    </label> <br>
+    <label for="country">
+      country : <input type="text" name="listing[country]" placeholder="Enter your country">
+    </label> <br>
+    <button>upload listing</button>
+  </form>
+</body>
+
+</html>
