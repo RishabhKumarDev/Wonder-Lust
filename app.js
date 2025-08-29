@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Listing from "./models/listing.js";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import methodOverride from "method-override";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +13,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 (async () => {
   try {
@@ -81,6 +83,43 @@ app.get("/listings/:id", async (req, res) => {
 app.post("/listings", async (req, res) => {
   try {
     let listing = await new Listing(req.body.listing).save();
+    res.redirect("/listings");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// edit route
+app.get("/listings/:id/edit", async (req, res) => {
+  try {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    res.render("listings/edit", { listing });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// put in DB
+app.patch("/listings/:id", async (req, res) => {
+  try {
+    let { id } = req.params;
+    console.log(req.body);
+    let updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
+      runValidators: true,
+      new: true,
+    });
+    res.redirect(`/listings/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+});
+// delete route
+app.delete("/listings/:id", async (req, res) => {
+  try {
+    let { id } = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    // console.log(deletedListing);
     res.redirect("/listings");
   } catch (error) {
     console.log(error);
