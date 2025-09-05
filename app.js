@@ -33,6 +33,7 @@ app.engine("ejs", ejsMate);
 app.get("/", (req, res) => {
   res.send("i am root");
 });
+
 //data insertion test--
 // app.get("/testListing", async (req, res) => {
 //   try {
@@ -59,6 +60,7 @@ app.get("/", (req, res) => {
 //     console.log(error);
 //   }
 // });
+
 
 // listing page
 app.get("/listings", async (req, res) => {
@@ -131,5 +133,5 @@ app.delete("/listings/:id", async (req, res) => {
 });
 
 app.listen("8080", () => {
-  console.log("app is listening--- Express ");
+  console.log("app is listening--- Express",`http://localhost:8080/listings` );
 });

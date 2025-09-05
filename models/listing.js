@@ -14,6 +14,7 @@ const listingSchema = new mongoose.Schema({
   image: {
     filename: {
       type: String,
+      default:"Listing Image"
     },
     url: {
       type: String,
