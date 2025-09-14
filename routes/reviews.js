@@ -34,6 +34,7 @@ router.post(
 
     review.save();
     listing.save();
+    req.flash("success","New Review Created!!!");
     res.redirect(`/listings/${listing._id}`);
   })
 );
@@ -55,6 +56,7 @@ router.delete(
       { new: true }
     );
     console.log(removedId, deletedReview);
+    req.flash("success","Review Deleted!!!");
     res.redirect(`/listings/${id}`);
   })
 );
