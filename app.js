@@ -7,8 +7,12 @@ import ejsMate from "ejs-mate";
 import { ExpressError } from "./utils/ExpressError.js";
 import listingRouter from "./routes/listings.js";
 import reviewRouter from "./routes/reviews.js";
+import userRouter from "./routes/user.js";
 import session from "express-session";
 import flash from "connect-flash";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import { User } from "./models/user.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +38,13 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.engine("ejs", ejsMate);
 
 (async () => {
@@ -57,9 +68,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.get("/demouser", async (req, res) => {
+//   let fakeUser = new User({
+//     email: "third@gmail.com",
+//     username: "third",
+//   });
+
+//   const registeredUser = await User.register(fakeUser, "helloword");
+//   res.send(registeredUser)
+// });
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-
+app.use("/",userRouter);
 // page not found
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(400, "Page Not Found"));
