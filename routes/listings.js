@@ -3,6 +3,7 @@ import wrapAsync from "../utils/wrapAsync.js";
 import { listingSchema } from "../schema.js";
 import Listing from "../models/listing.js";
 import { ExpressError } from "../utils/ExpressError.js";
+import { isLogedIn } from "../middleware.js";
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get(
   })
 );
 // new listing
-router.get("/new", (req, res) => {
+router.get("/new", isLogedIn, (req, res) => {
   res.render("listings/new");
 });
 // show
@@ -46,6 +47,7 @@ router.get(
 //create route
 router.post(
   "/",
+  isLogedIn,
   validateListing,
   wrapAsync(async (req, res, next) => {
     let listing = await new Listing(req.body.listing).save();
@@ -57,6 +59,7 @@ router.post(
 // edit route
 router.get(
   "/:id/edit",
+  isLogedIn,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
@@ -72,6 +75,7 @@ router.get(
 // put in DB
 router.patch(
   "/:id",
+  isLogedIn,
   validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -90,6 +94,7 @@ router.patch(
 // delete route
 router.delete(
   "/:id",
+  isLogedIn,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
@@ -97,6 +102,6 @@ router.delete(
     req.flash("success", "Listing Deleted!!!");
     res.redirect("/listings");
   })
-);
+); 
 
 export default router;
