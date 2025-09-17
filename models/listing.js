@@ -15,7 +15,7 @@ const listingSchema = new mongoose.Schema({
   image: {
     filename: {
       type: String,
-      set:function(v){
+      set: function (v) {
         return v === "" ? this.title : v;
       },
       default: "Listing Image",
@@ -48,6 +48,10 @@ const listingSchema = new mongoose.Schema({
       ref: "Review",
     },
   ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 listingSchema.post("findOneAndDelete", async (listing, next) => {

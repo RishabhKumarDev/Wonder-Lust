@@ -11,7 +11,7 @@ import Listing from "../models/listing.js";
   }
 })();
 
-const data = [
+let data = [
   {
     title: "Cozy Beachfront Cottage",
     description:
@@ -362,12 +362,15 @@ const data = [
   },
 ];
 
-
-(async()=>{
-    try {
-        await Listing.insertMany(data);
-        console.log("data saved");
-    } catch (error) {
-        console.log(error);
-    }
+(async () => {
+  try {
+    data = data.map((obj) => ({
+      ...obj,
+      owner:"68c825050aa051fddf63ae3a",
+    }));
+    await Listing.insertMany(data);
+    console.log("data saved");
+  } catch (error) {
+    console.log(error,"err");
+  }
 })();
