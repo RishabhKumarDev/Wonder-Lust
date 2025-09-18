@@ -16,6 +16,10 @@ const reviewSchema = new Schema(
       max: 5,
       enum: [1, 2, 3, 4, 5],
     },
+    author:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    }
   },
   { timestamps: true }
 );

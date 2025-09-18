@@ -1,8 +1,8 @@
 import Listing from "./models/listing.js";
+import { Review } from "./models/review.js";
 import { listingSchema } from "./schema.js";
 import { ExpressError } from "./utils/ExpressError.js";
-import {reviewSchema } from "./schema.js";
-
+import { reviewSchema } from "./schema.js";
 
 export const isLogedIn = (req, res, next) => {
   if (!req.isAuthenticated() && req.path !== "/login") {
@@ -23,7 +23,7 @@ export const saveRedirectUrl = (req, res, next) => {
 export const isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
-  console.log(listing.owner);
+  // console.log(listing.owner);
   if (!listing.owner.equals(res.locals.currUser._id)) {
     req.flash("error", "You are not authorized for this!!!");
     return res.redirect(`/listings/${id}`);
@@ -43,7 +43,7 @@ export const validateListing = (req, res, next) => {
 };
 
 export const validateReview = (req, res, next) => {
-  let { error,value } = reviewSchema.validate(req.body);
+  let { error, value } = reviewSchema.validate(req.body);
 
   if (error) {
     let errMsz = error.details.map((el) => el.message).join(",");
@@ -51,4 +51,15 @@ export const validateReview = (req, res, next) => {
   } else {
     next();
   }
+};
+
+export const isReviewAuthor = async (req, res, next) => {
+  let { id, reviewId } = req.params;
+  let review = await Review.findById(reviewId);
+  console.log(review.author);
+  if (!review.author.equals(res.locals.currUser._id)) {
+    req.flash("error", "You are not authorized for this!!!");
+    return res.redirect(`/listings/${id}`);
+  }
+  next();
 };
