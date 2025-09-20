@@ -1,3 +1,6 @@
+import "dotenv/config";
+// dotenv.config({path:"./.env"})
+
 import express from "express";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
@@ -43,7 +46,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser()); 
+passport.deserializeUser(User.deserializeUser());
 
 app.engine("ejs", ejsMate);
 
@@ -81,7 +84,7 @@ app.use((req, res, next) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/",userRouter);
+app.use("/", userRouter);
 // page not found
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(400, "Page Not Found"));

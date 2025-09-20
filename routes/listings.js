@@ -10,12 +10,22 @@ import {
   updateListing,
   deleteListing,
 } from "../controllers/listings.js";
-export const router = express.Router();
+import { cloudinary, storage } from "../cloudConfig.js";
+import multer from "multer";
+
+const router = express.Router();
+const upload = multer({ storage: storage });
+
 
 router
   .route("/")
   .get(wrapAsync(index))
-  .post(isLogedIn, validateListing, wrapAsync(createListing));
+  .post(
+    isLogedIn,
+    upload.single("listing[image][url]"),
+    validateListing,
+    wrapAsync(createListing)
+  );
 
 router.get("/new", isLogedIn, renderNewForm);
 

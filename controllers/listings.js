@@ -26,8 +26,12 @@ const showListing = async (req, res) => {
 };
 
 const createListing = async (req, res, next) => {
+  let { path, filename } = req.file;
+  console.log(path, filename);
   let listing = new Listing(req.body.listing);
   listing.owner = req.user._id;
+  listing.image = { url: path, filename };
+
   await listing.save();
   req.flash("success", "New Listing Created!!!");
   res.redirect("/listings");

@@ -7,7 +7,7 @@ const listingSchema = Joi.object({
     image: Joi.object({
       filename: Joi.string().allow(""),
       url: Joi.string().allow(""),
-    }).required(),
+    }),
     price: Joi.number().required(),
     location: Joi.string().required(),
     country: Joi.string().required(),
@@ -16,7 +16,7 @@ const listingSchema = Joi.object({
 
 const reviewSchema = Joi.object({
   review: Joi.object({
-    comment: Joi.string().min(10).max(150).required(),
+    comment: Joi.string().min(1).max(150).required(),
     rating: Joi.number().default(3).min(1).max(5).valid(1, 2, 3, 4, 5),
   }).required(),
 });
