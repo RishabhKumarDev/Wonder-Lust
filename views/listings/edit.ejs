@@ -6,7 +6,7 @@
             <h3>Edit Your Listing</h3>
             <div class="col-lg-9">
 
-                <form action="/listings/<%= listing._id %>?_method=PATCH" method="post" novalidate
+                <form action="/listings/<%= listing._id %>?_method=PATCH" method="post" novalidate enctype="multipart/form-data"
                     class="needs-validation">
 
                     <div class="mb-3">
@@ -34,32 +34,20 @@
                             Please Enter a valid Description.
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="filename" class="form-label">
-                            Image Name : </label>
-                        <input type="text" name="listing[image][filename]" placeholder="Enter your filename"
-                            value="<%= listing.image.filename %>" class="form-control">
-                            <div class="valid-feedback">
-                            Perfect!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please Enter a valid Image Name.
-                        </div>
+                      <div class="mb-3">
+                        <p>Original Image:</p>
+                        <img src="<%= originalUrl %>" alt="" width="300" height="200">
+                            
                     </div>
 
                     <div class="mb-3">
                         <label for="url" class="form-label">
-                            Image URL : </label>
-                        <input type="text" name="listing[image][url]" placeholder="Enter your url"
-                            value="<%= listing.image.url %>" class="form-control" required>
-                            <div class="valid-feedback">
-                            Perfect!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please Pass a Valid Image URL.
-                        </div>
+                            New Listing Image  : </label>
+                        <input type="file" name="listing[image][url]" placeholder="Enter your url"
+                            class="form-control">
+                            
                     </div>
+
                     <div class="row">
 
                         <div class="mb-3 col-md-4">

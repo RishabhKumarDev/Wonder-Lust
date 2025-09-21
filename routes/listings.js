@@ -16,7 +16,6 @@ import multer from "multer";
 const router = express.Router();
 const upload = multer({ storage: storage });
 
-
 router
   .route("/")
   .get(wrapAsync(index))
@@ -32,7 +31,13 @@ router.get("/new", isLogedIn, renderNewForm);
 router
   .route("/:id")
   .get(wrapAsync(showListing))
-  .patch(isLogedIn, isOwner, validateListing, wrapAsync(updateListing));
+  .patch(
+    isLogedIn,
+    isOwner,
+    upload.single("listing[image][url]"),
+    validateListing,
+    wrapAsync(updateListing)
+  );
 
 // edit route
 router.get("/:id/edit", isLogedIn, isOwner, wrapAsync(renderEditForm));

@@ -17,7 +17,6 @@ const showListing = async (req, res) => {
       populate: { path: "author" },
     })
     .populate("owner");
-  // console.log(listing,"----------------");
   if (!listing) {
     req.flash("error", "Listing Doesn't Exist!");
     return res.redirect("/listings");
@@ -44,12 +43,18 @@ const renderEditForm = async (req, res) => {
     req.flash("error", "Listing Doesn't Exist!");
     return res.redirect("/listings");
   }
-  console.log(listing);
-  res.render("listings/edit", { listing });
+  let originalUrl = listing.image.url;
+  originalUrl = originalUrl.replace(
+    "/upload",
+    "/upload/w_300,h_200,q_auto,f_auto"
+  );
+  console.log(originalUrl);
+  res.render("listings/edit", { listing, originalUrl });
 };
 
 const updateListing = async (req, res) => {
   let { id } = req.params;
+
   let updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
     runValidators: true,
     new: true,
@@ -57,6 +62,11 @@ const updateListing = async (req, res) => {
   if (!updatedListing) {
     req.flash("error", "Listing Doesn't Exist!");
     return res.redirect("/listings");
+  }
+  if (typeof req.file !== "undefined") {
+    let { path, filename } = req.file;
+    updatedListing.image = { url: path, filename };
+    await updatedListing.save();
   }
   req.flash("success", "Listing Updated!!!");
   res.redirect(`/listings/${id}`);
