@@ -1,4 +1,6 @@
 import Listing from "../models/listing.js";
+import { config, geocoding } from "@maptiler/client";
+config.apiKey = process.env.MAPTILER_API_KEY;
 
 const index = async (req, res) => {
   const allListings = await Listing.find();
@@ -25,13 +27,18 @@ const showListing = async (req, res) => {
 };
 
 const createListing = async (req, res, next) => {
+  const result = await geocoding.forward(req.body.listing.location, {
+    limit: 2,
+  });
+
   let { path, filename } = req.file;
   console.log(path, filename);
   let listing = new Listing(req.body.listing);
-  listing.owner = req.user._id;
+  listing.owner = req.user._id; 
   listing.image = { url: path, filename };
-
-  await listing.save();
+  listing.geometry = result.features[0].geometry;
+  let saved = await listing.save();
+  console.log(saved);
   req.flash("success", "New Listing Created!!!");
   res.redirect("/listings");
 };
