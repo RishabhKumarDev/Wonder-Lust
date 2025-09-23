@@ -1,22 +1,70 @@
 <% layout("/layouts/boilerplate") %>
 
-    <body>
-       
-    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3  ">
-        <% for(let listing of allListings){%>
 
-            <div class="card col listing-card">
-                <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.image.filename %>" style="height: 20rem;">
-                <!-- <div class="card-img-overlay"></div> -->
-                <div class="card-body">
-                    <h5 class="card-title"> <%= listing.title %> </h5>
-                    <p class="card-text">
-                        &#8377 <%= listing.price.toLocaleString("en-IN") %>/night </p>
-                    <a href="/listings/<%= listing._id %>" class="btn app-btn btn-primary">View Details</a>
+    <body>
+        <div class="filters-tax-container">
+            <div id="filters">
+                <div class="filter">
+                    <div><i class="fa-solid fa-house fa-sm" style="color: #ff0066;"></i></div>
+                    <p>Tiny Home</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-fire fa-sm" style="color: #ff0066;"></i></div>
+                    <p>Top</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-umbrella-beach fa-sm" style="color: #ff0066;"></i></i></div>
+                    <p>Beach</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-snowflake fa-sm " style="color: #ff0066;"></i></div>
+                    <p>Artic</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-mountain-sun fa-sm" style="color: #ff0066;"></i></div>
+                    <p>Sun Rise</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-shuttle-space fa-sm" style="color: #ff0066;"></i></i></div>
+                    <p>Space</p>
+                </div>
+                <div class="filter">
+                    <div><i class="fa-solid fa-cloud-moon fa-sm" style="color: #ff0066;"></i></div>
+                    <p>Cozy night</p>
                 </div>
             </div>
 
-            <% } %>
+            <div class="tax-toggle">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Show With Taxes</label>
+                </div>
+            </div>
+        </div>
 
-        </div>        
+        <div class="row mt-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
+            <% for(let listing of allListings){%>
+
+                <div class="card col listing-card">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.image.filename %>"
+                        style="height: 20rem;">
+                    <!-- <div class="card-img-overlay"></div> -->
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= listing.title %>
+                        </h5>
+                        <p class="card-text">
+                            &#8377 <%= listing.price.toLocaleString("en-IN") %>/night <i class="tax-info"
+                                    style="display: none;"> &nbsp;+ 18% GST</i>
+                        </p>
+                        <a href="/listings/<%= listing._id %>" class="btn app-btn btn-primary">View Details</a>
+                    </div>
+                </div>
+
+                <% } %>
+
+        </div>
     </body>
+    <script src="/js/btn-control.js">
+        
+    </script>

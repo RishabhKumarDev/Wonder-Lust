@@ -8,6 +8,7 @@ body {
   flex: 1;
 }
 
+/* navbar */
 @media (min-width: 768px) {
   .navbar {
     height: 5rem;
@@ -21,6 +22,27 @@ body {
 .nav-link {
   color: #222222 !important;
 }
+
+/* search */
+
+.search-inp {
+  border-radius: 1.5rem;
+  border: 2px solid #fe424d;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+}
+
+.search-btn {
+  background-color: #fe424d;
+  color: white;
+  border-radius: 1.5rem;
+  padding: 0 1rem 0 1rem;
+}
+
+.search-btn:hover {
+  background-color: #fe424d;
+  color: white;
+}
+
 /* Footer  */
 
 .f-info {
@@ -86,9 +108,49 @@ body {
   opacity: 1 !important;
 }
 
-.btns{
-    display: flex;
+.btns {
+  display: flex;
 }
-.del:hover{
-    background-color: rgb(255, 0, 0) !important;
+.del:hover {
+  background-color: rgb(255, 0, 0) !important;
+}
+
+/* filters section */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter {
+  text-align: center;
+  margin-right: 1.2rem;
+  margin-top: 1.5rem;
+  opacity: 0.888;
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+  font-size: medium;
+  color: #000;
+}
+
+.filter p {
+  font-size: small;
+}
+
+.tax-toggle {
+  border: 1px solid black;
+  border-radius: 2rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+}
+
+.filters-tax-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
