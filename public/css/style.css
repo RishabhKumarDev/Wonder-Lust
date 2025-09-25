@@ -24,25 +24,48 @@ body {
 }
 
 /* search */
-
+.nav-link{
+  flex-shrink: 0;
+  height: auto;
+  line-height: 1;
+}
 .search-inp {
-  border-radius: 1.5rem;
-  border: 2px solid #fe424d;
-  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 1.5rem !important;
+  border: 2px solid #fe424d !important;
+  padding: 0.5rem 2rem 0.5rem 2rem !important;
+  width: max-content;
 }
 
 .search-btn {
-  background-color: #fe424d;
-  color: white;
-  border-radius: 1.5rem;
-  padding: 0 1rem 0 1rem;
+  background-color: #fe424d !important;
+  color: white !important;
+  border-radius: 1.5rem !important;
+  padding: 0 1rem 0 1rem !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .search-btn:hover {
-  background-color: #fe424d;
-  color: white;
+  background-color: #fe424d !important;
+  color: white !important;
 }
 
+@media (width >= 768px) {
+  .small-screen-search{
+    display: none;
+  }
+  
+}
+
+
+@media (width < 768px) {
+  .big-screen-search{
+    display: none;
+  }
+  .small-screen-search{
+  margin: auto;
+}
+}
 /* Footer  */
 
 .f-info {
@@ -118,10 +141,15 @@ body {
 /* filters section */
 #filters {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; 
+  margin-right: 2rem;
 }
-
+.filters::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on Chrome/Safari */
+}
 .filter {
   text-align: center;
   margin-right: 1.2rem;
@@ -143,14 +171,39 @@ body {
 .tax-toggle {
   border: 1px solid black;
   border-radius: 2rem;
-  padding: 1rem;
+  padding:0 1rem;
   display: flex;
   align-items: center;
-  height: 3rem;
+  /* height: 3rem; */
+  white-space: nowrap;
+  flex-shrink: 0;
+  height: auto;
+  line-height: 1;
+}
+.tax-toggle .form-check {
+  display: flex !important;
+  align-items: center !important;      /* align switch + label properly */
+  margin: 0 !important;                /* remove Bootstrap’s default bottom margin */
 }
 
+.tax-toggle .form-check-label {
+  margin-left: 0.5rem !important;      /* spacing from the switch */
+  display: flex !important;
+  align-items: center !important;      /* vertically center text with switch */
+}
 .filters-tax-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.tax-toggle .form-check-input {
+  position: relative;
+  top: -1px;   /* adjust this value until it looks centered */
+}
+
+@media (max-width: 768px) {
+  .tax-toggle {
+    padding: 0 0.75rem;      /* smaller padding */
+    font-size: 0.875rem;     /* shrink text a bit */
+  }
 }

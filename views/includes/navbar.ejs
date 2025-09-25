@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
-    <div class="container-fluid">
+    <div class="container-fluid ">
         <a class="navbar-brand" href="/listings"><i class="fa-solid fa-compass"></i></a>
+
+
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,16 +12,16 @@
             <div class="navbar-nav">
                 <a class="nav-link" href="/listings">Homes</a>
             </div>
-            <div class="ms-auto">
+            <div class="ms-auto big-screen-search">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2 search-inp" type="search" placeholder="Search by Location..."
+                    <input class="form-control me-2 search-inp" type="search" placeholder="Ease Looking..."
                         aria-label="Search" />
                     <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass-location"
-                            style="color: #ffffff;"></i></button>
+                            style="color: #ffffff;"></i>Search</button>
                 </form>
             </div>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/listings/new">Host Your Home</a>
+                <a class="nav-link" href="/listings/new">Host Your Place</a>
                 <% if (!currUser) { %>
                     <a class="nav-link" href="/signup"> <b>SignUp</b></a>
                     <a class="nav-link" href="/login"><b>LogIn</b></a>
@@ -31,4 +33,14 @@
             </div>
         </div>
     </div>
+
+    <div class="ms-auto small-screen-search">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2 search-inp" type="search" placeholder="Ease Looking..."
+                aria-label="Search" />
+            <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass-location"
+                    style="color: #ffffff;"></i>Search</button>
+        </form>
+    </div>
+    
 </nav>
