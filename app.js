@@ -16,6 +16,20 @@ import flash from "connect-flash";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import { User } from "./models/user.js";
+import MongoStore from "connect-mongo";
+
+
+const db_URL = process.env.ATLAS_URL;
+
+(async () => {
+  try {
+    // const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust"; -- locol DB;
+    await mongoose.connect(db_URL);
+    console.log("connected to MongoDB");
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -28,8 +42,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+
+const store = MongoStore.create({
+  mongoUrl: db_URL,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+store.on("error", () => {
+  console.log("ERROR in MONGO SESSION STORE");
+});
 const sessionOptions = {
-  secret: "p9vT6x!fR2#kW8qZ4uL0mS7jD1bH3yN5",
+  store,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -47,18 +73,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 app.engine("ejs", ejsMate);
-
-(async () => {
-  try {
-    const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
-    await mongoose.connect(MONGO_URL);
-    console.log("connected to MongoDB");
-  } catch (error) {
-    console.log(error);
-  }
-})();
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
