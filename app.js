@@ -1,6 +1,4 @@
 import "dotenv/config";
-// dotenv.config({path:"./.env"})
-
 import express from "express";
 import mongoose from "mongoose";
 import { fileURLToPath } from "url";
@@ -23,7 +21,6 @@ const db_URL = process.env.ATLAS_URL;
 
 (async () => {
   try {
-    // const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust"; -- locol DB;
     await mongoose.connect(db_URL);
     console.log("connected to MongoDB");
   } catch (error) {
@@ -82,19 +79,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/demouser", async (req, res) => {
-//   let fakeUser = new User({
-//     email: "third@gmail.com",
-//     username: "third",
-//   });
-
-//   const registeredUser = await User.register(fakeUser, "helloword");
-//   res.send(registeredUser)
-// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+
 // page not found
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(400, "Page Not Found"));
@@ -104,7 +93,6 @@ app.all(/.*/, (req, res, next) => {
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "some thing went wrong" } = err;
   res.status(statusCode).render("listings/error", { message });
-  // res.status(statusCode).send(message);
 });
 
 app.listen("8080", () => {
